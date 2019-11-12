@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: f-oris
- * Date: 2019/8/16
- * Time: 2:58 PM
- */
 
 namespace Foris\Easy\Support\Tests;
 
@@ -13,10 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class UtilTest
- *
- * @package Foris\Easy\Support\Tests
- * @author  f-oris <us@f-oris.me>
- * @version 1.0.0
  */
 class UtilTest extends TestCase
 {

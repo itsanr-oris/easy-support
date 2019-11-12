@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: f-oris
- * Date: 2019/6/21
- * Time: 11:31 AM
- */
 
 namespace Foris\Easy\Support\Tests;
 
@@ -17,10 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class CollectionTest
- *
- * @package EasySmartProgram\Tests\Support\Collection
- * @author  f-oris <us@f-oris.me>
- * @version 1.0.0
  */
 class CollectionTest extends TestCase
 {
