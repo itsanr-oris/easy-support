@@ -5,8 +5,8 @@ php:
 
 branches:
   except:
-  #    - develop
-  - master
+  # - develop
+  # - master
   - /^feature.*$/
 
 install:
