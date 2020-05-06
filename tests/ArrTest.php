@@ -199,4 +199,11 @@ class ArrTest extends TestCase
 
         $this->assertEquals($expectedKeyValue, Arr::pluck($original, 'value', 'name'));
     }
+
+    public function testWrapAGivenValueIntoArray()
+    {
+        $this->assertEquals([], Arr::wrap(null));
+        $this->assertEquals(['test'], Arr::wrap('test'));
+        $this->assertEquals(['test'], Arr::wrap(['test']));
+    }
 }
