@@ -172,6 +172,9 @@ class FileSystemTest extends TestCase
         $this->assertEquals('Hello world!', file_get_contents($file));
     }
 
+    /**
+     * test Filesystem::makeDirectory
+     */
     public function testMakeDirectory()
     {
         vfsStream::setup('home');
@@ -183,5 +186,20 @@ class FileSystemTest extends TestCase
 
         Filesystem::makeDirectory($url, 0755, true, true);
         $this->assertTrue(Filesystem::exists($url));
+    }
+
+    /**
+     * test Filesystem::scanFiles
+     */
+    public function testScanFiles()
+    {
+        $vfs = vfsStream::setup('home');
+        $expected = [];
+
+        $expected[] = vfsStream::newFile('test-1.txt', 0000)->at($vfs)->url();
+        $expected[] = vfsStream::newFile('test-2.txt', 0000)->at($vfs)->url();
+        $expected[] = vfsStream::newFile('test-dir/test-3.txt', 0000)->at($vfs)->url();
+
+        $this->assertEquals($expected, Filesystem::scanFiles($vfs->url()));
     }
 }
