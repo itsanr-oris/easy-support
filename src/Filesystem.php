@@ -139,4 +139,26 @@ class Filesystem
 
         return mkdir($path, $mode, $recursive);
     }
+
+    /**
+     * Scan all file information in the specified directory.
+     *
+     * @param string $dir
+     * @return array
+     */
+    public static function scanFiles(string $dir = '')
+    {
+        $files = [];
+        $fds   = scandir($dir);
+        unset($fds[array_search('.', $fds, true)]);
+        unset($fds[array_search('..', $fds, true)]);
+
+        foreach ($fds as $fd) {
+            $path  = $dir . '/' . $fd;
+            $farr  = is_dir($path) ? static::scanFiles($path) : [$path];
+            $files = array_merge($files, $farr);
+        }
+
+        return $files;
+    }
 }
