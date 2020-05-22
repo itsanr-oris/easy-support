@@ -202,4 +202,18 @@ class FileSystemTest extends TestCase
 
         $this->assertEquals($expected, Filesystem::scanFiles($vfs->url()));
     }
+
+    /**
+     * test Filesystem::replace
+     */
+    public function testReplace()
+    {
+        $file = __DIR__ . '/stubs/test-file.txt';
+
+        file_put_contents($file, 'test content');
+        $this->assertEquals('test content', file_get_contents($file));
+
+        Filesystem::replace($file, 'replace content');
+        $this->assertEquals('replace content', file_get_contents($file));
+    }
 }
