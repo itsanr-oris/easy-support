@@ -167,7 +167,8 @@ class Arr
      */
     public static function expect($array, $keys)
     {
-        return static::except($array, $keys);
+        static::forget($array, $keys);
+        return $array;
     }
 
     /**
@@ -221,6 +222,7 @@ class Arr
      * @param  array  $array
      * @param  array|string  $keys
      * @return array
+     * @deprecated
      */
     public static function except($array, $keys)
     {
