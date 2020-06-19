@@ -164,6 +164,7 @@ class Arr
      * @param  array        $array
      * @param  array|string $keys
      * @return array
+     * @deprecated
      */
     public static function expect($array, $keys)
     {
@@ -222,7 +223,6 @@ class Arr
      * @param  array  $array
      * @param  array|string  $keys
      * @return array
-     * @deprecated
      */
     public static function except($array, $keys)
     {
