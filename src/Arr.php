@@ -87,7 +87,7 @@ class Arr
      * @param $array
      * @param $key
      */
-    public static function unset(&$array, $key)
+    public static function unsetItem(&$array, $key)
     {
         $keys = explode('.', $key);
 
@@ -133,7 +133,7 @@ class Arr
     public static function forget(&$array, $keys)
     {
         foreach ($keys as $key) {
-            self::unset($array, $key);
+            self::unsetItem($array, $key);
         }
     }
 
@@ -156,19 +156,6 @@ class Arr
         }
 
         return $result;
-    }
-
-    /**
-     * Get all of the given array except for a specified array of keys.
-     *
-     * @param  array        $array
-     * @param  array|string $keys
-     * @return array
-     */
-    public static function expect($array, $keys)
-    {
-        static::forget($array, $keys);
-        return $array;
     }
 
     /**
@@ -222,7 +209,6 @@ class Arr
      * @param  array  $array
      * @param  array|string  $keys
      * @return array
-     * @deprecated
      */
     public static function except($array, $keys)
     {

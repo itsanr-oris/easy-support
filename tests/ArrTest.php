@@ -1,11 +1,10 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 namespace Foris\Easy\Support\Tests;
 
 use ArrayAccess;
 use Mockery;
 use Foris\Easy\Support\Arr;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class ArrTest
@@ -67,7 +66,7 @@ class ArrTest extends TestCase
             ],
         ];
 
-        Arr::unset($actual, 'key.sub-key');
+        Arr::unsetItem($actual, 'key.sub-key');
         $this->assertEquals($expected, $actual);
     }
 
@@ -147,7 +146,7 @@ class ArrTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, Arr::expect($original, ['key-1.sub-key-2', 'key-2.sub-key-1']));
+        $this->assertEquals($expected, Arr::except($original, ['key-1.sub-key-2', 'key-2.sub-key-1']));
     }
 
     public function testFlattenAssociativeArrayIntoDot()
