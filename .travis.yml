@@ -3,7 +3,7 @@ language: php
 dist: trusty
 
 php:
-  - 5.5.0
+  - 5.5
 
 branches:
   except:
