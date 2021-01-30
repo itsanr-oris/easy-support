@@ -9,6 +9,12 @@
 [![Total Downloads](https://poser.pugx.org/f-oris/easy-support/downloads)](https://packagist.org/packages/f-oris/easy-support)
 [![License](https://poser.pugx.org/f-oris/easy-support/license)](LICENSE)
 
+## 安装
+
+```bash
+composer require f-oris/easy-support:^1.3
+```
+
 ## License
 
 MIT License
