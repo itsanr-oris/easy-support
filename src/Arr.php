@@ -86,8 +86,20 @@ class Arr
      *
      * @param $array
      * @param $key
+     * @deprecated
      */
     public static function unset(&$array, $key)
+    {
+        static::unsetItem($array, $key);
+    }
+
+    /**
+     * Unset an array item using "dot" notation.
+     *
+     * @param $array
+     * @param $key
+     */
+    public static function unsetItem(&$array, $key)
     {
         $keys = explode('.', $key);
 
@@ -133,7 +145,7 @@ class Arr
     public static function forget(&$array, $keys)
     {
         foreach ($keys as $key) {
-            self::unset($array, $key);
+            self::unsetItem($array, $key);
         }
     }
 
@@ -168,8 +180,7 @@ class Arr
      */
     public static function expect($array, $keys)
     {
-        static::forget($array, $keys);
-        return $array;
+        return static::except($array, $keys);
     }
 
     /**

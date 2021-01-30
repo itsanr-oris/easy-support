@@ -9,6 +9,11 @@
 [![Total Downloads](https://poser.pugx.org/f-oris/easy-support/downloads)](https://packagist.org/packages/f-oris/easy-support)
 [![License](https://poser.pugx.org/f-oris/easy-support/license)](LICENSE)
 
+## 说明
+
+- [x] 废弃Arr::unset()函数，可使用Arr::forget()函数代替，下一版本移除
+- [x] 废弃Arr::expect()函数，可使用Arr::except()函数代替，下一版本移除
+
 ## 安装
 
 ```bash
