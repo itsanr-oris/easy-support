@@ -3,7 +3,6 @@
 namespace Foris\Easy\Support\Tests;
 
 use Foris\Easy\Support\Util;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class UtilTest

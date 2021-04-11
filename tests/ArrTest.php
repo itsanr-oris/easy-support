@@ -1,11 +1,10 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 namespace Foris\Easy\Support\Tests;
 
 use ArrayAccess;
 use Mockery;
 use Foris\Easy\Support\Arr;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class ArrTest
@@ -67,8 +66,16 @@ class ArrTest extends TestCase
             ],
         ];
 
-        Arr::unset($actual, 'key.sub-key');
+        Arr::unsetItem($actual, 'key.sub-key');
         $this->assertEquals($expected, $actual);
+
+        if (PHP_MAJOR_VERSION >= 7) {
+            $this->assertThrowException(
+                \PHPUnit_Framework_Error::class,
+                'Deprecated: The unset() function is deprecated, use unsetItem() instead!'
+            );
+            call_user_func_array([Arr::class, 'unset'], [$actual, 'key.sub-key']);
+        }
     }
 
     public function testArrayItemExists()
@@ -147,7 +154,13 @@ class ArrTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, Arr::expect($original, ['key-1.sub-key-2', 'key-2.sub-key-1']));
+        $this->assertEquals($expected, Arr::except($original, ['key-1.sub-key-2', 'key-2.sub-key-1']));
+
+        $this->assertThrowException(
+            \PHPUnit_Framework_Error::class,
+            'Deprecated: The expect() function is deprecated, use except() instead!'
+        );
+        Arr::expect($original, ['key-1.sub-key-2', 'key-2.sub-key-1']);
     }
 
     public function testFlattenAssociativeArrayIntoDot()

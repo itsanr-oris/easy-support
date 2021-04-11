@@ -3,7 +3,6 @@
 namespace Foris\Easy\Support\Tests;
 
 use Foris\Easy\Support\Str;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class StrTest
@@ -99,9 +98,10 @@ class StrTest extends TestCase
      */
     public function testLengthFunction()
     {
-        $this->assertEquals(8, Str::length('Hi，好久不见！'));
-        $this->assertEquals(8, Str::length('Hi，好久不见！', 'UTF-8'));
-        $this->assertEquals(11, Str::length('Hi，好久不见！', 'gbk'));
+        $string = 'Hi，好久不见！';
+        $this->assertEquals(mb_strlen($string), Str::length($string));
+        $this->assertEquals(mb_strlen($string, 'UTF-8'), Str::length($string, 'UTF-8'));
+        $this->assertEquals(mb_strlen($string, 'gbk'), Str::length($string, 'gbk'));
     }
 
     /**
