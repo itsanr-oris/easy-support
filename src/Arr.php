@@ -86,27 +86,6 @@ class Arr
     }
 
     /**
-     * Unset an array item using "dot" notation.
-     *
-     * @param $array
-     * @param $key
-     */
-    public static function unsetItem(&$array, $key)
-    {
-        $keys = explode('.', $key);
-
-        while (count($keys) > 1) {
-            $key = array_shift($keys);
-
-            if (isset($array[$key]) && is_array($array[$key])) {
-                $array = &$array[$key];
-            }
-        }
-
-        unset($array[array_shift($keys)]);
-    }
-
-    /**
      * Determine if the given key exists in the provided array.
      *
      * @param $array
@@ -136,9 +115,30 @@ class Arr
      */
     public static function forget(&$array, $keys)
     {
-        foreach ($keys as $key) {
-            self::unsetItem($array, $key);
+        foreach (static::wrap($keys) as $key) {
+            self::forgetItem($array, $key);
         }
+    }
+
+    /**
+     * Remove item from a given array using "dot" notation.
+     *
+     * @param $array
+     * @param $key
+     */
+    protected static function forgetItem(&$array, $key)
+    {
+        $keys = explode('.', $key);
+
+        while (count($keys) > 1) {
+            $key = array_shift($keys);
+
+            if (isset($array[$key]) && is_array($array[$key])) {
+                $array = &$array[$key];
+            }
+        }
+
+        unset($array[array_shift($keys)]);
     }
 
     /**

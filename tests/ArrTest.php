@@ -54,30 +54,6 @@ class ArrTest extends TestCase
         $this->assertEquals('default', Arr::get($array, 'key.not-exists', $default));
     }
 
-    public function testUnsetArrayItem()
-    {
-        $expected = [
-            'key' => [],
-        ];
-
-        $actual = [
-            'key' => [
-                'sub-key' => 'value'
-            ],
-        ];
-
-        Arr::unsetItem($actual, 'key.sub-key');
-        $this->assertEquals($expected, $actual);
-
-        if (PHP_MAJOR_VERSION >= 7) {
-            $this->assertThrowException(
-                \PHPUnit_Framework_Error::class,
-                'Deprecated: The unset() function is deprecated, use unsetItem() instead!'
-            );
-            call_user_func_array([Arr::class, 'unset'], [$actual, 'key.sub-key']);
-        }
-    }
-
     public function testArrayItemExists()
     {
         $array = [
@@ -93,18 +69,25 @@ class ArrTest extends TestCase
     public function testForgetArrayItem()
     {
         $expected = [
-            'key' => [],
+            'key' => [
+                'sub-key-2' => 'value-2',
+                'sub-key-3' => 'value-3',
+            ],
         ];
 
         $actual = [
             'key' => [
                 'sub-key-1' => 'value-1',
                 'sub-key-2' => 'value-2',
+                'sub-key-3' => 'value-3',
             ],
         ];
 
-        Arr::forget($actual, ['key.sub-key-1', 'key.sub-key-2']);
+        Arr::forget($actual, 'key.sub-key-1');
         $this->assertEquals($expected, $actual);
+
+        Arr::forget($actual, ['key.sub-key-2', 'key.sub-key-3']);
+        $this->assertEquals(['key' => []], $actual);
     }
 
     public function testGetNewArrayWithOnlySpecifiedArrayItems()
