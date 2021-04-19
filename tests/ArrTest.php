@@ -1,11 +1,10 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 namespace Foris\Easy\Support\Tests;
 
 use ArrayAccess;
 use Mockery;
 use Foris\Easy\Support\Arr;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class ArrTest
@@ -55,22 +54,6 @@ class ArrTest extends TestCase
         $this->assertEquals('default', Arr::get($array, 'key.not-exists', $default));
     }
 
-    public function testUnsetArrayItem()
-    {
-        $expected = [
-            'key' => [],
-        ];
-
-        $actual = [
-            'key' => [
-                'sub-key' => 'value'
-            ],
-        ];
-
-        Arr::unset($actual, 'key.sub-key');
-        $this->assertEquals($expected, $actual);
-    }
-
     public function testArrayItemExists()
     {
         $array = [
@@ -86,18 +69,25 @@ class ArrTest extends TestCase
     public function testForgetArrayItem()
     {
         $expected = [
-            'key' => [],
+            'key' => [
+                'sub-key-2' => 'value-2',
+                'sub-key-3' => 'value-3',
+            ],
         ];
 
         $actual = [
             'key' => [
                 'sub-key-1' => 'value-1',
                 'sub-key-2' => 'value-2',
+                'sub-key-3' => 'value-3',
             ],
         ];
 
-        Arr::forget($actual, ['key.sub-key-1', 'key.sub-key-2']);
+        Arr::forget($actual, 'key.sub-key-1');
         $this->assertEquals($expected, $actual);
+
+        Arr::forget($actual, ['key.sub-key-2', 'key.sub-key-3']);
+        $this->assertEquals(['key' => []], $actual);
     }
 
     public function testGetNewArrayWithOnlySpecifiedArrayItems()
@@ -147,7 +137,13 @@ class ArrTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, Arr::expect($original, ['key-1.sub-key-2', 'key-2.sub-key-1']));
+        $this->assertEquals($expected, Arr::except($original, ['key-1.sub-key-2', 'key-2.sub-key-1']));
+
+        $this->assertThrowException(
+            \PHPUnit_Framework_Error::class,
+            'Deprecated: The expect() function is deprecated, use except() instead!'
+        );
+        Arr::expect($original, ['key-1.sub-key-2', 'key-2.sub-key-1']);
     }
 
     public function testFlattenAssociativeArrayIntoDot()

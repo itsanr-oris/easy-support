@@ -1,7 +1,9 @@
 language: php
 
+dist: trusty
+
 php:
-- 7.2.0
+  - 5.5
 
 branches:
   except:
@@ -10,10 +12,10 @@ branches:
   - /^feature.*$/
 
 install:
-- composer install
+  - composer install
 
 script:
-- vendor/bin/phpunit --coverage-clover=coverage.xml
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)

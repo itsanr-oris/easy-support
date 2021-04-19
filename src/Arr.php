@@ -3,9 +3,13 @@
 namespace Foris\Easy\Support;
 
 use ArrayAccess;
+use Exception;
 
 /**
  * Array helper base on Illuminate\Support\Arr.
+ *
+ * @method static unset(&$array, $key)
+ * @method static expect($array, $keys)
  */
 class Arr
 {
@@ -82,39 +86,6 @@ class Arr
     }
 
     /**
-     * Unset an array item using "dot" notation.
-     *
-     * @param $array
-     * @param $key
-     * @deprecated
-     */
-    public static function unset(&$array, $key)
-    {
-        static::unsetItem($array, $key);
-    }
-
-    /**
-     * Unset an array item using "dot" notation.
-     *
-     * @param $array
-     * @param $key
-     */
-    public static function unsetItem(&$array, $key)
-    {
-        $keys = explode('.', $key);
-
-        while (count($keys) > 1) {
-            $key = array_shift($keys);
-
-            if (isset($array[$key]) && is_array($array[$key])) {
-                $array = &$array[$key];
-            }
-        }
-
-        unset($array[array_shift($keys)]);
-    }
-
-    /**
      * Determine if the given key exists in the provided array.
      *
      * @param $array
@@ -144,9 +115,30 @@ class Arr
      */
     public static function forget(&$array, $keys)
     {
-        foreach ($keys as $key) {
-            self::unsetItem($array, $key);
+        foreach (static::wrap($keys) as $key) {
+            self::forgetItem($array, $key);
         }
+    }
+
+    /**
+     * Remove item from a given array using "dot" notation.
+     *
+     * @param $array
+     * @param $key
+     */
+    protected static function forgetItem(&$array, $key)
+    {
+        $keys = explode('.', $key);
+
+        while (count($keys) > 1) {
+            $key = array_shift($keys);
+
+            if (isset($array[$key]) && is_array($array[$key])) {
+                $array = &$array[$key];
+            }
+        }
+
+        unset($array[array_shift($keys)]);
     }
 
     /**
@@ -168,19 +160,6 @@ class Arr
         }
 
         return $result;
-    }
-
-    /**
-     * Get all of the given array except for a specified array of keys.
-     *
-     * @param  array        $array
-     * @param  array|string $keys
-     * @return array
-     * @deprecated
-     */
-    public static function expect($array, $keys)
-    {
-        return static::except($array, $keys);
     }
 
     /**
@@ -254,5 +233,26 @@ class Arr
         }
 
         return is_array($value) ? $value : [$value];
+    }
+
+    /**
+     * Fix static::unset() method.
+     *
+     * @param $name
+     * @param $arguments
+     * @throws Exception
+     * @codeCoverageIgnore
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if ($name == 'unset') {
+            trigger_error('Deprecated: The unset() function is deprecated, use unsetItem() instead!', E_USER_NOTICE);
+        }
+
+        if ($name == 'expect') {
+            trigger_error('Deprecated: The expect() function is deprecated, use except() instead!', E_USER_NOTICE);
+        }
+
+        trigger_error("Error: Call to undefined method Foris\Easy\Support\Arr::{$name}()!", E_USER_ERROR);
     }
 }

@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection PhpMethodParametersCountMismatchInspection */
+
+/** @noinspection PhpUndefinedClassInspection */
 
 namespace Foris\Easy\Support\Tests;
 
@@ -7,7 +9,6 @@ use Foris\Easy\Support\Collection;
 use Foris\Easy\Support\Contracts\Arrayable;
 use Foris\Easy\Support\Contracts\Jsonable;
 use Mockery;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class CollectionTest

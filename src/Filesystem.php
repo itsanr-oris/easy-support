@@ -146,7 +146,7 @@ class Filesystem
      * @param string $dir
      * @return array
      */
-    public static function scanFiles(string $dir = '')
+    public static function scanFiles($dir = '')
     {
         $files = [];
         $fds   = scandir($dir);

@@ -1,11 +1,10 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 namespace Foris\Easy\Support\Tests;
 
 use Foris\Easy\Support\Exceptions\FileNotFountException;
 use Foris\Easy\Support\Filesystem;
 use org\bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class FileSystemTest
@@ -122,12 +121,10 @@ class FileSystemTest extends TestCase
         vfsStream::setup('home');
         $file = vfsStream::url('home/text.txt');
         file_put_contents($file, "The new contents of the file");
-
         $this->assertEquals('The new contents of the file', Filesystem::get($file));
 
         $nonExistFile = vfsStream::url('home/non-exist-file.txt');
-        $this->expectException(FileNotFountException::class);
-        $this->expectExceptionMessage("File does not exist at path {$nonExistFile}");
+        $this->assertThrowException(FileNotFountException::class, "File does not exist at path {$nonExistFile}");
         FileSystem::get($nonExistFile);
     }
 

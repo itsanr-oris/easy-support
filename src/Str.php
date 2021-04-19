@@ -193,11 +193,7 @@ class Str
      */
     public static function length($value, $encoding = null)
     {
-        if ($encoding) {
-            return mb_strlen($value, $encoding);
-        }
-
-        return mb_strlen($value);
+        return $encoding ? mb_strlen($value, $encoding) : mb_strlen($value);
     }
 
     /**
@@ -284,7 +280,8 @@ class Str
         $result = array_shift($segments);
 
         foreach ($segments as $segment) {
-            $result .= (array_shift($replace) ?? $search).$segment;
+            $prefix = array_shift($replace);
+            $result .= (isset($prefix) ? $prefix : $search) . $segment;
         }
 
         return $result;
